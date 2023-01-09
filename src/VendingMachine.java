@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class VendingMachine {
     private static List<Product> products = new ArrayList<>();
@@ -29,14 +30,10 @@ public class VendingMachine {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please, put your money:");
         int cash = sc.nextInt();
-        for (int i = 0; i < products.size(); i++) {
-            if(cash< products.get(i).getPrice()){
-                System.out.println("you don't have enough funds, top up your balance");
-            } else{
-                System.out.println("you can buy " + products.get(i).getName() + " " + products.get(i).getPrice() + "$");
-            }
+        var checked = products.stream().filter(m -> m.getPrice()<=cash).collect(Collectors.toList());
+        System.out.println("Available: ");
+        checked.forEach(System.out::println);
 
-        }
     }
 
 
